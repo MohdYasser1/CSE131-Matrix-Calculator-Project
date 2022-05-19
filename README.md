@@ -2,7 +2,7 @@
  This is a matrix calculator that can preform simple operations on two matrices
 
 ## Day 1:
-...Initialized the matrices and implemented how to take them from the user.
+Initialized the matrices and implemented how to take them from the user.
 
 **Done**:
  - how to take the dimensions of both matrices.
