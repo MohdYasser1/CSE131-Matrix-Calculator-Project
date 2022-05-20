@@ -35,25 +35,25 @@ int main (){
     int matA [10][10];
     int matB [10][10];
 
-    cout << "Please enter dimentions of Matrix A:";
+    cout << "Please enter dimensions of Matrix A:\n";
     cin >> rA >> cA;
 
-    cout << "Please enter dimentions of Matrix B:";
+    cout << "Please enter dimensions of Matrix B:\n";
     cin >> rB >> cB;
 
-    cout << "Please enter values of Matrix A:";
+    cout << "Please enter values of Matrix A:\n";
     for (int i=0; i < rA; i++){
         for (int j=0; j < cA; j++)
             cin >> matA[i][j];
     }
 
-    cout << "Please enter values of Matrix B:";
+    cout << "Please enter values of Matrix B:\n";
     for (int i=0; i < rB; i++){
         for (int j=0; j < cB; j++)
             cin>> matB[i][j];
     }
     do {
-        cout << "Please choose operation type(1: A+B, 2: A-B, 3: AxB, 4: A*inverse(B), 5: |A|, 6: |B|, 7: quit):";
+        cout << "Please choose operation type(1: A+B, 2: A-B, 3: AxB, 4: A*inverse(B), 5: |A|, 6: |B|, 7: quit):\n";
         cin >> op;
 
         switch (op)
