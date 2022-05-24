@@ -2,7 +2,7 @@
 
 using namespace std;
 
-    int ans = 0, ans1 = 0; // a global varible to store the final determinant used in determinant function
+    long long ans = 0, ans1 = 0, ans2 = 0; // a global varible to store the final determinant used in determinant function
 
 
 /// A function to Add 2 Matrix of any size
@@ -55,7 +55,6 @@ void Mult(int A[][10], int B[][10], int rA, int rB, int cA, int cB){
     }
 } 
 
-int det_sub(int mat[][10], int dim); // trying to solve for matrix > 3 x 3
 
 /**
  * Gets a determinant of any matrix by minimizing it to a 2x2 matrix
@@ -63,12 +62,16 @@ int det_sub(int mat[][10], int dim); // trying to solve for matrix > 3 x 3
  * @param dim number of rows/ columns of the matrix that indicates its dimensions (dim x dim)
  * @return int 
  */
-int det(int mat[][10], int dim){
+long long det(int mat[][10], int dim){
     
     int factors[10] ; // an array to store the factors that will be multiplied with at the end
     int red_mat[10][10]; // an array to store the reduced matrix to be put in the function again
     int sign[10] = {1,-1,1,-1,1,-1,1,-1,1,-1}; // an array to change the sign of the factors
+    long long ans_arr[10] = {0} ; //an array to store the answers and try to avoid the error  
+    int f; // detrmines we are in the which factor
 
+    if (dim == 1)
+        return mat[0][0];
     if (dim == 2){
         ans1 = mat[0][0] * mat[1][1] - mat[0][1] * mat[1][0];
         return ans1;
@@ -83,7 +86,6 @@ int det(int mat[][10], int dim){
         }
 
         int m = 0, n = 0; // varibles to change the rows and columns of the reduced matrix
-        int f; // detrmines we are in the which factor
         for(f = 0; f < dim; f++){
             for (int k = 1; k < dim; k++){ // for loop to go through the matrix except the first row
                     for(int l = 0; l < dim; l++){
@@ -96,18 +98,20 @@ int det(int mat[][10], int dim){
                 m=0;
             }
             n=0;
-            ans += (factors[f] * det_sub(red_mat, dim - 1)); // ERROR: Not working adding 2 times after completing the 3x3 matrix of the first 4x4
-
+                ans_arr[f] = (factors[f] * det(red_mat,dim -1)); // ERROR: Not working adding 2 times after completing the 3x3 matrix of the first 4x4
         }
-        return ans;
+    }
+    ans = 0;
+    for (int y = 0; y < dim + 1; y++)
+        ans += ans_arr[y];
+    if (f == (dim -1)){
+        for (int y = 0; y < dim + 1; y++)
+        ans2 += ans_arr[y];
+        return ans2;
     }
 
-}
+    return ans;
 
-int det_sub(int mat[][10], int dim){
-    int ans2 = 0;
-    ans2 = det(mat, dim);
-    return ans2;
 }
 
 
