@@ -6,7 +6,7 @@ using namespace std;
 
 
 /// A function to Add 2 Matrix of any size
-void Add(int A[][10], int B[][10], int row, int col){ //passing only the rows and coloumns from one matrix only as the both of them has to be equal to add
+void Add(double A[][10], double B[][10], int row, int col){ //passing only the rows and coloumns from one matrix only as the both of them has to be equal to add
     
     int add[10][10]; // A new matrix to store the added matrices
     
@@ -20,7 +20,7 @@ void Add(int A[][10], int B[][10], int row, int col){ //passing only the rows an
 }
 
 //// a function to Subtract 2 Matrix of any size
-void Sub(int A[][10], int B[][10], int row, int col){ //passing only the rows and coloumns from one matrix only as the both of them has to be equal to subtract
+void Sub(double A[][10], double B[][10], int row, int col){ //passing only the rows and coloumns from one matrix only as the both of them has to be equal to subtract
     
     int sub[10][10]; // A new matrix to store the subtracted matrices
     
@@ -33,10 +33,13 @@ void Sub(int A[][10], int B[][10], int row, int col){ //passing only the rows an
     }
 }
 
-/// A function to Multiply 2 Matrix of any size
-void Mult(int A[][10], int B[][10], int rA, int rB, int cA, int cB){
+double round(double x);
 
-    int sum;
+
+/// A function to Multiply 2 Matrix of any size
+void Mult(double A[][10], double B[][10], int rA, int rB, int cA, int cB){
+
+    double sum;
 
     for (int i=0; i < rA; i++){
             for (int l=0; l < cB; l++){
@@ -49,7 +52,7 @@ void Mult(int A[][10], int B[][10], int rA, int rB, int cA, int cB){
                 }
 
 
-                cout << sum << " ";
+                cout << round(sum) << " ";
         }
         cout << endl;
     }
@@ -62,13 +65,13 @@ void Mult(int A[][10], int B[][10], int rA, int rB, int cA, int cB){
  * @param dim number of rows/ columns of the matrix that indicates its dimensions (dim x dim)
  * @return long long the determinant of the matrix 
  */
-long long det(int mat[][10], int dim){
+long long det(double mat[][10], int dim){
     
-    int factors[10] ; // an array to store the factors that will be multiplied with at the end
-    int red_mat[10][10]; // an array to store the reduced matrix to be put in the function again
+    int factors[10] ;                          // an array to store the factors that will be multiplied with at the end
+    double red_mat[10][10];                       // an array to store the reduced matrix to be put in the function again
     int sign[10] = {1,-1,1,-1,1,-1,1,-1,1,-1}; // an array to change the sign of the factors
-    long long ans_arr[10] = {0} ; //an array to store the answers and try to avoid the error  
-    int f; // detrmines we are in the which factor
+    long long ans_arr[10] = {0} ;              //an array to store the answers and try to avoid the error  
+    int f;                                     // detrmines we are in the which factor
 
     if (dim == 1)
         return mat[0][0];
@@ -98,7 +101,7 @@ long long det(int mat[][10], int dim){
                 m=0;
             }
             n=0;
-                ans_arr[f] = (factors[f] * det(red_mat,dim -1)); // ERROR: Not working adding 2 times after completing the 3x3 matrix of the first 4x4
+                ans_arr[f] = (factors[f] * det(red_mat,dim -1)); // ERROR (FIXED): Not working adding 2 times after completing the 3x3 matrix of the first 4x4
         }
     }
     ans = 0;
@@ -114,13 +117,139 @@ long long det(int mat[][10], int dim){
 
 }
 
+/**
+ * @brief A function to round to the nearnest integer
+ * 
+ * @param x The decimal to be rounded
+ * @return int Returning the integer 
+ */
+double round(double x){
+
+    int ten= (x*10);
+    int tenth = ten % 10;
+    int y;
+
+    if (x>=0){
+        if (tenth<5)
+            y =x;
+        else
+            y = ++x;
+    }
+    else{
+
+       if ((tenth) <=-5)
+            y= --x;
+       else
+            y=x;
+    }
+    return y;
+}
+
+/**
+ * @brief A function to get the inverse of a matrix using determinants and Matrix of minors and then divide by it
+ * 
+ * @param div The matrix to be divided by at the end when we get the inverse
+ * @param mat The matrix to be inversed
+ * @param dim The dimensions of the matrix
+ * @param rA The rows of the div matrix
+ * @param cB The columns of the div matrix 
+ * @return void It will print the division matrix directly 
+ */
+void Division(double div[][10], int rA, int cA, double mat[][10], int dim){
+
+    double minor[10][10];                   //  A matrix of minors
+    double minor_ad[10][10];                // A matrix of adjugated minors
+    double determinant_mat = det(mat, dim); //The determinant of the matrix
+    double deter[10][10];                         //  A matrix to calculate the determinant of
+    int m = 0, n = 0, o = 0, p = 0;                   //counters
+    double inverse[10][10];                    //The inverse of the matrix
+    double cofactor[10][10];             // A cofactor matrix
+
+
+    // the inverse of 2x2 matrix (Lazy Way)
+    if(dim == 2){
+        inverse[0][0] = mat[1][1]/determinant_mat;
+        inverse[0][1] = (mat[0][1]*-1)/determinant_mat;
+        inverse [1][0] = (mat [1][0]*-1)/determinant_mat;
+        inverse [1][1] = (mat[0][0])/determinant_mat;
+
+    }
+    else{
+
+
+    //Tring to get the matrix of minors
+    for (int i =0; i < dim; i++){
+        for(int j = 0; j < dim; j++){
+            deter[10][10] = {0};
+            n = 0;
+            for (int k = 0; k < dim; k++){
+                m = 0; 
+                for(int l = 0; l < dim; l++){
+                    if(k == i || l == j )
+                        continue;
+                    deter[n][m] = mat[k][l];
+                    m++;                                                
+                }
+                if(k != i)
+                    n++; 
+            }
+            minor[i][j] = det(deter, dim -1);
+            ans = 0; ans1 = 0; ans2 = 0; // resetting for the determinant function (Stupid Impletaion) 
+        }
+    }
+
+    //Cofactor matrix implemtation
+
+    for (int a = 0; a < 10; a++){
+        for(int b=0; b < 10; b++){
+            if (a % 2 ==0){
+                if (o % 2 == 0)
+                    cofactor[a][b] = 1;
+                else
+                    cofactor[a][b] = -1;
+                o++;}
+            else {
+                if (p % 2 == 0)
+                    cofactor[a][b] = -1;
+                else
+                    cofactor[a][b] = 1;
+                p++;
+            }
+
+        }
+    }
+
+
+    for (int y = 0; y < dim; y++){
+        for(int z=0; z < dim; z++){
+                minor[y][z] = minor[y][z]*cofactor[y][z];
+        }
+    }
+
+    //Getting the adjucate of the matrix
+    for(int c = 0; c < dim; c++){
+        for(int d =0; d < dim; d++){
+            minor_ad[c][d] = minor[d][c];
+        }
+    }
+
+    for (int e = 0; e < dim; e ++){
+        for(int f = 0; f < dim; f++){
+            inverse[e][f] = (1.0/determinant_mat) * minor_ad[e][f];
+        }
+    }
+    }
+
+    //Performing the division
+    Mult(div, inverse,rA, dim, cA, dim);
+}
 
 int main (){
     int rA, rB, cA, cB;
     int op;
 
-    int matA [10][10];
-    int matB [10][10];
+    double matA [10][10];
+    double matB [10][10];
 
     cout << "Please enter dimensions of Matrix A:\n";
     cin >> rA >> cA;
@@ -167,6 +296,10 @@ int main (){
             break;
         
         case 4:
+            if (rB == cB &&  cA == rB && det(matB, rB) != 0)
+                Division(matA, rA, cA, matB, rB);
+            else
+                cout << "The operation you chose is invalid for the given matrices.\n";
             break;
 
         case 5:
