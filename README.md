@@ -83,3 +83,31 @@ sum (int): A varible to display each cell of the matrix which represents the sum
 
 ---
 
+## Day 3:
+Started with the determinant function but having problems with a matrix bigger than 3x3. The idea of the function that it takes the large matrix and bring the determinant of smaller matrix till it reaches to a 2x2 matrix which then it caculates it easily. The problem is when I am trying a 4x4 matrix and it finishes the first 3x3 it adds ans twice.
+
+### Problems Finished
+1. Problem A ✅
+2. Problem B ✅
+3. Problem C ✅
+4. Problem D ✅
+5. Problem E
+6. Problem F
+7. Problem G
+8. Problem H
+9. Problem I
+
+### Done:
+- Learned how to bring the determinant of any matrix
+- Learned how to bring the inverse of a 2x2 matrix
+- Started on the determinant function
+
+### ToDo:
+- Fix the determinant function
+- Learn how to bring the inverse of any matrix
+- Try to start the inverse function
+
+### New varibles:
+The new varibles will be explained on the code because the number of varibles became huge 😅
+
+---
