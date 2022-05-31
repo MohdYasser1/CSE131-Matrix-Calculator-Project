@@ -60,7 +60,7 @@ void Mult(int A[][10], int B[][10], int rA, int rB, int cA, int cB){
  * Gets a determinant of any matrix by minimizing it to a 2x2 matrix
  * @param mat the matrix needed to get the determinant from
  * @param dim number of rows/ columns of the matrix that indicates its dimensions (dim x dim)
- * @return int 
+ * @return long long the determinant of the matrix 
  */
 long long det(int mat[][10], int dim){
     
