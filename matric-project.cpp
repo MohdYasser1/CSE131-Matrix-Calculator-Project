@@ -102,10 +102,10 @@ long long det(int mat[][10], int dim){
         }
     }
     ans = 0;
-    for (int y = 0; y < dim + 1; y++)
+    for (int y = 0; y < dim ; y++)
         ans += ans_arr[y];
     if (f == (dim -1)){
-        for (int y = 0; y < dim + 1; y++)
+        for (int y = 0; y < dim ; y++)
         ans2 += ans_arr[y];
         return ans2;
     }
